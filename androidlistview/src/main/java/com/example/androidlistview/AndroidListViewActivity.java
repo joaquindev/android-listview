@@ -1,5 +1,6 @@
 package com.example.androidlistview;
 
+import android.app.ListActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,19 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
 
-public class AndroidListViewActivity extends ActionBarActivity {
+public class AndroidListViewActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+        //storing string resources into Array
+        String[] adobe_products = getResources().getStringArray(R.array.adobe_products);
+
+        //binding resources Array to ListAdapter
+        this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, R.id.label, adobe_products));
     }
 
 
