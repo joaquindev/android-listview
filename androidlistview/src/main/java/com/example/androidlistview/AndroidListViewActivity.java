@@ -1,6 +1,7 @@
 package com.example.androidlistview;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,19 +12,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class AndroidListViewActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //storing string resources into Array
         String[] adobe_products = getResources().getStringArray(R.array.adobe_products);
-
         //binding resources Array to ListAdapter
         this.setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, R.id.label, adobe_products));
+
+        //2. Get selected list item string and send it to new Activity (SingleListItem.java)
+        ListView lv = getListView();
+
+        //2. Listen to single list item click events
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                //Get selected item
+                String product = ((TextView) view).getText().toString();
+
+                //Now launch new Activity on selecting single List item
+                Intent i = new Intent(getApplicationContext(), SingleListItem.class);
+                //Send the data to the new activity
+                i.putExtra("product", product);
+                startActivity(i);
+            }
+        });
     }
 
 
