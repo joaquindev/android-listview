@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class AndroidListViewActivity extends ListActivity {
 
@@ -31,17 +32,18 @@ public class AndroidListViewActivity extends ListActivity {
         ListView lv = getListView();
 
         //2. Listen to single list item click events
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                //Get selected item
+        // listening to single list item on click
+        lv.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // selected item
                 String product = ((TextView) view).getText().toString();
-
-                //Now launch new Activity on selecting single List item
+                // Launching new Activity on selecting single List Item
                 Intent i = new Intent(getApplicationContext(), SingleListItem.class);
-                //Send the data to the new activity
+                // sending data to new activity
                 i.putExtra("product", product);
                 startActivity(i);
+
             }
         });
     }
